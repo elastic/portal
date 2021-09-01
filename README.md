@@ -1,5 +1,7 @@
-# copy_file_to_another_repo_action
-This GitHub Action copies a file from the current repository to a location in another repository
+# Portal
+A GitHub action based on [copy_file_to_another_repo](https://github.com/dmnemec/copy_file_to_another_repo_action).
+
+Forked for easy hackin'
 
 # Example Workflow
     name: Push File
