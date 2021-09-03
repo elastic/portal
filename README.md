@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.3.4
 
     - name: Pull branch name
       shell: bash
@@ -28,7 +28,7 @@ jobs:
       id: source_branch
 
     - name: Pushes test file
-      uses: dmnemec/copy_file_to_another_repo_action@main
+      uses: elastic/portal@main
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
