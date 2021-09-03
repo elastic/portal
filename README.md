@@ -4,28 +4,42 @@ A GitHub action based on [copy_file_to_another_repo](https://github.com/dmnemec/
 Forked for easy hackin'
 
 # Example Workflow
-    name: Push File
 
-    on: push
+```yml
+name: Portal to wordlake
 
-    jobs:
-      copy-file:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+# Operate only when PRs close. 
+on:
+  pull_request:
+    types: [closed]
 
-        - name: Pushes test file
-          uses: dmnemec/copy_file_to_another_repo_action@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-          with:
-            source_file: 'test2.md'
-            destination_repo: 'dmnemec/release-test'
-            destination_folder: 'test-dir'
-            user_email: 'example@email.com'
-            user_name: 'dmnemec'
-            commit_message: 'A custom message for the commit'
+jobs:
+  copy-file:
+    # PRs must close into a merge, and not just close
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Pull branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: source_branch
+
+    - name: Pushes test file
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_file: 'fishy-file.mdx'
+        destination_repo: 'elastic/yonder-doc-lake'
+        user_email: 'portal@elastic.co'
+        user_name: 'portal'
+        destination_folder: 'zerp'
+        destination_branch: ${{ steps.source_branch.outputs.branch }}
+        destination_branch_create: ''
+```
 
 # Variables
 
