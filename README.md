@@ -17,20 +17,16 @@ yet not one doc build needs repair
 ```yml
 name: Portal
 
-on:
-  pull_request:
-    types: [closed]
+on: push
 
 jobs:
   copy-file:
-    # PRs must close into a merge, and not just close
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2.3.4
 
-    - name: Pull branch name
+    - name: Extract branch name
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: source_branch
@@ -40,26 +36,24 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_file: 'source-dir/.'
+        source_file: '1 2 3 README.md'
         destination_repo: 'elastic/wordlake'
         user_email: 'portal@elastic.co'
         user_name: 'portal'
-        destination_folder: 'zerp'
-        destination_branch: ${{ steps.source_branch.outputs.branch }}
-        destination_branch_create: ''
+        destination_folder: 'docs/'
+        destination_branch_create: '${{ steps.source_branch.outputs.branch }}'
 ```
 
 # Variables
 
 The `API_TOKEN_GITHUB` needs to be set in the `Secrets` section of your repository options. You can retrieve the `API_TOKEN_GITHUB` [here](https://github.com/settings/tokens) (set the `repo` permissions).
 
-* source_file: The file or directory to be moved. Uses the same syntax as the `cp` command. Incude the path for any files not in the repositories root directory.
+* source_file: Add multiple dirs and files, match using `.`. Multiple dirs: `1 2 3`. Multiple files: `file1.mdx file2.mdx`. Mix of dirs and files: `1 2 3 file1.mdx`.
 * destination_repo: The repository to place the file or directory in.
 * destination_folder: [optional] The folder in the destination repository to place the file in, if not the root directory.
 * user_email: The GitHub user email associated with the API token secret.
 * user_name: The GitHub username associated with the API token secret.
-* destination_branch: [optional] The branch of the source repo to update, if not "main" branch is used.
-* destination_branch_create: [optional] A branch to be created with this commit, defaults to commiting in `destination_branch`
+* destination_branch_create: [optional] Creates a branch if does not exist, switches if it does.
 * commit_message: [optional] A custom commit message for the commit. Defaults to `Update from https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`
 
 # Behavior Notes
