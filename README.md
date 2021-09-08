@@ -1,14 +1,22 @@
 # Portal
-A GitHub action based on [copy_file_to_another_repo](https://github.com/dmnemec/copy_file_to_another_repo_action).
 
-Forked for easy hackin'
+<p align="center">
+  <img width="460" height="300" src="portal.png">
+</p>
+
+```
+a file was here
+a file was there
+
+friggin' files are everywhere
+yet not one doc build needs repair
+```
 
 # Example Workflow
 
 ```yml
-name: Portal to wordlake
+name: Portal
 
-# Operate only when PRs close. 
 on:
   pull_request:
     types: [closed]
@@ -27,13 +35,13 @@ jobs:
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: source_branch
 
-    - name: Pushes test file
+    - name: Teleport to wordlake
       uses: elastic/portal@main
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_file: 'fishy-file.mdx'
-        destination_repo: 'elastic/yonder-doc-lake'
+        source_file: 'source-dir/.'
+        destination_repo: 'elastic/wordlake'
         user_email: 'portal@elastic.co'
         user_name: 'portal'
         destination_folder: 'zerp'
@@ -55,4 +63,9 @@ The `API_TOKEN_GITHUB` needs to be set in the `Secrets` section of your reposito
 * commit_message: [optional] A custom commit message for the commit. Defaults to `Update from https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`
 
 # Behavior Notes
+
 The action will create any destination paths if they don't exist. It will also overwrite existing files if they already exist in the locations being copied to. It will not delete the entire destination repository.
+
+# Forked
+
+A GitHub action based on [copy_file_to_another_repo](https://github.com/dmnemec/copy_file_to_another_repo_action).
