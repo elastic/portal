@@ -42,10 +42,9 @@ echo "Adding git commit"
 git add .
 if git status | grep -q "Changes to be committed"
 then
-  git pull remote $INPUT_DESTINATION_BRANCH
   git commit --message "$INPUT_COMMIT_MESSAGE"
   echo "Pushing git commit"
-  git push -u origin HEAD:$OUTPUT_BRANCH
+  git push -f -u origin HEAD:$OUTPUT_BRANCH
 else
   echo "No changes detected"
 fi
