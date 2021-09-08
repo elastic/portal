@@ -8,8 +8,8 @@
 the file was here
 then the file was there
 
-friggin' files flying everywhere
-but not one doc build needs repair
+friggin' files flyin' everywhere
+and not one doc build needs repair
 ```
 
 # Example Workflow
