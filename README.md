@@ -5,11 +5,11 @@
 </p>
 
 ```
-a file was here
-a file was there
+the file was here
+then the file was there
 
-friggin' files are everywhere
-yet not one doc build needs repair
+friggin' files flying everywhere
+but not one doc build needs repair
 ```
 
 # Example Workflow
