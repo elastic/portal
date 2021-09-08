@@ -24,7 +24,7 @@ git clone --single-branch --branch $INPUT_DESTINATION_BRANCH "https://x-access-t
 
 echo "Copying contents to git repo"
 mkdir -p $CLONE_DIR/$INPUT_DESTINATION_FOLDER
-cp -R "$INPUT_SOURCE_FILE" "$CLONE_DIR/$INPUT_DESTINATION_FOLDER"
+cp -R $INPUT_SOURCE_FILE $CLONE_DIR/$INPUT_DESTINATION_FOLDER
 cd "$CLONE_DIR"
 
 if [ ! -z "$INPUT_DESTINATION_BRANCH_CREATE" ]
@@ -44,7 +44,7 @@ if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
   echo "Pushing git commit"
-  git push -u origin HEAD:$OUTPUT_BRANCH
+  git push -f -u origin HEAD:$OUTPUT_BRANCH
 else
   echo "No changes detected"
 fi
