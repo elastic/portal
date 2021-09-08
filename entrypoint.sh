@@ -42,6 +42,7 @@ echo "Adding git commit"
 git add .
 if git status | grep -q "Changes to be committed"
 then
+  echo "Pulling contents to avoid collision"
   git pull
   git commit --message "$INPUT_COMMIT_MESSAGE"
   echo "Pushing git commit"
