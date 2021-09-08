@@ -43,7 +43,7 @@ git add .
 if git status | grep -q "Changes to be committed"
 then
   echo "Pulling contents to avoid collision"
-  git pull
+  git pull origin HEAD:$OUTPUT_BRANCH
   git commit --message "$INPUT_COMMIT_MESSAGE"
   echo "Pushing git commit"
   git push -u origin HEAD:$OUTPUT_BRANCH
