@@ -17,7 +17,10 @@ and not one doc build needs repair
 ```yml
 name: Portal
 
-on: push
+on: 
+  push:
+    - '*.mdx'
+    - '*.docnav.json'
 
 jobs:
   copy-file:
