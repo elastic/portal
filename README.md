@@ -6,7 +6,7 @@
 
 ```
 the file was here
-then the file was there
+the file was there
 
 friggin' files flyin' everywhere
 and not one doc build needs repair
